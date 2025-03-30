@@ -1,0 +1,14 @@
+{
+  "name": "hardhat-project",
+  "scripts": {
+    "deploy": "npx hardhat ignition deploy ./ignition/modules/ArweaveMapping.ts --network bscTestnet"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "hardhat": "^2.22.19"
+  },
+  "volta": {
+    "node": "22.14.0"
+  }
+}
