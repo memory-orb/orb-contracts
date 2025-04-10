@@ -1,7 +1,8 @@
 {
   "name": "hardhat-project",
   "scripts": {
-    "deploy": "npx hardhat ignition deploy ./ignition/modules/ArweaveMapping.ts --network bscTestnet"
+    "compile": "hardhat compile",
+    "deploy": "hardhat ignition deploy ./ignition/modules/ArweaveMapping.ts --network bscTestnet"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
