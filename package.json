@@ -3,7 +3,7 @@
   "scripts": {
     "test": "hardhat test",
     "compile": "hardhat compile",
-    "deploy": "hardhat ignition deploy ./ignition/modules/MemoryMapping.ts --network bscTestnet",
+    "deploy": "hardhat ignition deploy ./ignition/modules/MemoryMapping.ts --network bscTestnet --verify",
     "verify": "hardhat ignition verify chain-97 --include-unrelated-contracts"
   },
   "devDependencies": {

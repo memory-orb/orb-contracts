@@ -13,7 +13,7 @@ describe('MemoryMapping', async () => {
         return { contract, uploader1, uploader2 };
     }
 
-    it('should memory amount uploaded successful', async () => {
+    it('should memory amount uploaded correctly', async () => {
         const { contract, uploader1, uploader2 } = await loadFixture(deployMemoryMappingFixture);
 
         await contract.connect(uploader1).addMemory("testMemory1", "testArweave1", "0 ETH");
@@ -35,13 +35,15 @@ describe('MemoryMapping', async () => {
         assert.equal(latestMemories[0].memoryId, "testMemoryId1", "The arweave tx id of 1st latest memory should be 'testMemoryId1'");
         assert.equal(latestMemories[0].price, "0 ETH", "The price of 1st latest memory should be 0 ETH");
         assert.equal(latestMemories[0].description, "testDescription1", "The description of 1st latest memory should be 'testDescription1'");
+        assert.equal(latestMemories[0].uploader, uploader1.address, "The uploader of 1st latest memory should be uploader1");
 
         assert.equal(latestMemories[1].memoryId, "testMemoryId2", "The arweave tx id of 2nd latest memory should be 'testMemoryId2'");
         assert.equal(latestMemories[1].price, "1 ETH", "The price of 2nd latest memory should be 1 ETH");
         assert.equal(latestMemories[1].description, "testDescription2", "The description of 2nd latest memory should be 'testDescription2'");
+        assert.equal(latestMemories[1].uploader, uploader2.address, "The uploader of 2nd latest memory should be uploader2");
     });
 
-    it('should memory after 30 overwrite latest memories successful', async () => {
+    it('should memory after 30 overwrite latest memories correctly', async () => {
         const { contract, uploader1, uploader2 } = await loadFixture(deployMemoryMappingFixture);
 
         // Add 33 memories

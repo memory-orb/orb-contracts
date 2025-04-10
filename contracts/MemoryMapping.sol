@@ -16,9 +16,16 @@ contract MemoryMapping {
         string description;
     }
 
+    struct MemoryDetail {
+        address uploader;
+        string memoryId;
+        string price;
+        string description;
+    }
+
     address[] private registeredUsers;
     mapping(address => MemoryEntry[]) private sharedMemories;
-    MemoryEntry[30] private latestMemories;
+    MemoryDetail[30] private latestMemories;
     uint8 private latestMemoryIndex;
     uint256 private totalMemories;
 
@@ -40,7 +47,8 @@ contract MemoryMapping {
                 description: _description
             })
         );
-        latestMemories[latestMemoryIndex] = MemoryEntry({
+        latestMemories[latestMemoryIndex] = MemoryDetail({
+            uploader: msg.sender,
             memoryId: _memoryId,
             price: _price,
             description: _description
@@ -89,9 +97,9 @@ contract MemoryMapping {
      * @dev 获取最新的记忆列表
      * @return 最新的记忆列表
      */
-    function getLatestMemories() external view returns (MemoryEntry[] memory) {
+    function getLatestMemories() external view returns (MemoryDetail[] memory) {
         uint256 count = totalMemories < 30 ? totalMemories : 30;
-        MemoryEntry[] memory memories = new MemoryEntry[](count);
+        MemoryDetail[] memory memories = new MemoryDetail[](count);
         for (uint256 i = 0; i < count; i++) {
             memories[i] = latestMemories[i];
         }
