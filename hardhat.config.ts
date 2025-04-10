@@ -16,6 +16,9 @@ const config: HardhatUserConfig = {
       gasPrice: 20000000000, // 20 gwei
     }
   },
+  etherscan: {
+    apiKey: process.env.BSC_SCAN_API
+  }
 };
 
 export default config;
