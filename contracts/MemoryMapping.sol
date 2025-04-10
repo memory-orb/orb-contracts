@@ -2,16 +2,16 @@
 pragma solidity ^0.8.20;
 
 /**
- * @title ArweaveMapping
+ * @title MemoryMapping
  * @dev 存储以太坊地址到 Arweave 交易 ID 的映射关系
  */
-contract ArweaveMapping {
+contract MemoryMapping {
     // 事件，当映射更新时触发
-    event TxIdUpdated(address indexed user, string memoryId);
+    event MemoryAdded(address indexed user, string memoryId);
 
     // 定义结构体来存储地址及其对应的Arweave交易ID
     struct MemoryEntry {
-        string arweaveTxId;
+        string memoryId;
         string price;
         string description;
     }
@@ -35,13 +35,13 @@ contract ArweaveMapping {
     ) external {
         sharedMemories[msg.sender].push(
             MemoryEntry({
-                arweaveTxId: _memoryId,
+                memoryId: _memoryId,
                 price: _price,
                 description: _description
             })
         );
         latestMemories[latestMemoryIndex] = MemoryEntry({
-            arweaveTxId: _memoryId,
+            memoryId: _memoryId,
             price: _price,
             description: _description
         });
@@ -50,7 +50,7 @@ contract ArweaveMapping {
         if (sharedMemories[msg.sender].length == 1) {
             registeredUsers.push(msg.sender);
         }
-        emit TxIdUpdated(msg.sender, _memoryId);
+        emit MemoryAdded(msg.sender, _memoryId);
     }
 
     /**
@@ -89,7 +89,12 @@ contract ArweaveMapping {
      * @dev 获取最新的记忆列表
      * @return 最新的记忆列表
      */
-    function getLatestMemories() external view returns (MemoryEntry[30] memory) {
-        return latestMemories;
+    function getLatestMemories() external view returns (MemoryEntry[] memory) {
+        uint256 count = totalMemories < 30 ? totalMemories : 30;
+        MemoryEntry[] memory memories = new MemoryEntry[](count);
+        for (uint256 i = 0; i < count; i++) {
+            memories[i] = latestMemories[i];
+        }
+        return memories;
     }
 }
